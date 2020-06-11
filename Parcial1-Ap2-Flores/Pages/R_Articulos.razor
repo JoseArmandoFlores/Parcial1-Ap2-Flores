@@ -5,10 +5,89 @@
 
 @inject IToastService toast
 
-<h3>R_Articulos</h3>
+<EditForm Model="articulos" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator/>
+    <div class="card">
+        <div class="card-header">
+            <h3>Registro de articulos</h3>
+        </div>
+
+        <div class="card-body">
+            <form>
+                @*Articulo id*@
+                <div class="form-row align-items-center">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Articulo Id</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="articulos.ProductoId" class="form-control col-4"></InputNumber>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
+                                        <span class="oi oi-zoom-in"></span>Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Descripcion*@
+                <div class="form-group">
+                    <label>Descripcion</label>
+                    <InputText @bind-Value="articulos.Descripcion" class="form-control"></InputText>
+                </div>
+
+                @*Existencia*@
+                <div class="form-group">
+                    <label>Existencia</label>
+                    <InputNumber @bind-Value="articulos.Existencia" class="form-control" @onfocusout="CalcularValorInventario"></InputNumber>
+                </div>
+
+                @*Costo*@
+                <div class="form-group">
+                    <label>Costo</label>
+                    <InputNumber @bind-Value="articulos.Costo" class="form-control" @onfocusout="CalcularValorInventario"></InputNumber>
+                </div>
+
+                @*Valor en inventario*@
+                <div class="form-group">
+                    <label>Valor en inventario</label>
+                    <InputNumber @bind-Value="articulos.ValorInvetario" class="form-control" readOnly></InputNumber>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="card-footer">
+            <div class="form-group text-center" display: inLine-block>
+                <button type="button" class="btn btn-primary" @onclick="Nuevo">
+                    <span class="oi oi-file"></span>Nuevo
+                </button>
+            </div>
+
+            <div class="form-group text-center" display: inLine-block>
+                <button type="submit" class="btn btn-success">
+                    <span class="oi oi-cloud"></span>Guardar
+                </button>
+            </div>
+
+            <div class="form-group text-center" display: inLine-block>
+                <button type="button" class="btn btn-danger" @onclick="Eliminar">
+                    <span class="oi oi-trash"></span>Eliminar
+                </button>
+            </div>
+        </div>
+
+    </div>
+</EditForm>
 
 @code {
     Articulos articulos = new Articulos();
+
+    private void CalcularValorInventario()
+    {
+        articulos.ValorInvetario = articulos.Existencia * articulos.Costo;
+    }
 
     protected override void OnInitialized()
     {
@@ -31,13 +110,35 @@
                 this.articulos = encontrado;
             }
             else
-                toast.ShowWarning("¡No encontrado!");
+                toast.ShowWarning("¡Articulo no encontrado!");
         }
     }
 
     private void Guardar()
     {
         bool guardo;
-        guardo =ArticulosBLL
+        guardo = ArticulosBLL.Guardar(articulos);
+
+        if (guardo)
+        {
+            Nuevo();
+            toast.ShowSuccess("¡Guardado con exito!");
+        }
+        else
+            toast.ShowError("¡Error al guardar!");
     }
+
+    private void Eliminar()
+    {
+        bool elimino = ArticulosBLL.Eliminar(articulos.ProductoId);
+
+        if(elimino)
+        {
+            Nuevo();
+            toast.ShowSuccess("¡Eliminado con exito!");
+        }
+        else
+            toast.ShowError("¡Error al eliminar!");
+    }
+
 }
