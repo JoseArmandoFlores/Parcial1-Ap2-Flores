@@ -35,24 +35,28 @@
                 <div class="form-group">
                     <label>Descripcion</label>
                     <InputText @bind-Value="articulos.Descripcion" class="form-control"></InputText>
+                    <ValidationMessage For="@(()=>articulos.Descripcion)"></ValidationMessage>
                 </div>
 
                 @*Existencia*@
-                <div class="form-group">
-                    <label>Existencia</label>
-                    <InputNumber @bind-Value="articulos.Existencia" class="form-control" @onfocusout="CalcularValorInventario"></InputNumber>
-                </div>
+            <div class="form-group">
+                <label>Existencia</label>
+                <InputNumber @bind-Value="articulos.Existencia" class="form-control" @onfocusout="CalcularValorInventario"></InputNumber>
+                <ValidationMessage For="@(()=>articulos.Existencia)"></ValidationMessage>
+            </div>
 
                 @*Costo*@
                 <div class="form-group">
                     <label>Costo</label>
                     <InputNumber @bind-Value="articulos.Costo" class="form-control" @onfocusout="CalcularValorInventario"></InputNumber>
+                    <ValidationMessage For="@(()=>articulos.Costo)"></ValidationMessage>
                 </div>
 
                 @*Valor en inventario*@
                 <div class="form-group">
                     <label>Valor en inventario</label>
                     <InputNumber @bind-Value="articulos.ValorInvetario" class="form-control" readOnly></InputNumber>
+                    <ValidationMessage For="@(()=>articulos.ValorInvetario)"></ValidationMessage>
                 </div>
 
             </form>
@@ -72,7 +76,6 @@
                     <span class="oi oi-trash"></span>Eliminar
                 </button>
             </div>
-
         </div>
 
     </div>
