@@ -14,10 +14,8 @@ namespace Parcial1_Ap2_Flores.Models
         [Required(ErrorMessage ="Es obligatorio introducir la descripcion")]
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "Es obligatorio introducir la cantidad en existencia")]
-        [Phone(ErrorMessage ="No se permite letras")]
         public int Existencia { get; set; }
         [Required(ErrorMessage = "Es obligatorio introducir el costo")]
-        [Phone(ErrorMessage = "No se permite letras")]
         public decimal Costo { get; set; }
         public decimal ValorInvetario { get; set; }
 
