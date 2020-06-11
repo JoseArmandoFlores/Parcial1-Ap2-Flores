@@ -41,6 +41,7 @@ namespace Parcial1_Ap2_Flores.BLL
             try
             {
                 db.Entry(articulo).State = EntityState.Modified;
+                paso = db.SaveChanges() > 0;
             }
             catch (Exception)
             {
