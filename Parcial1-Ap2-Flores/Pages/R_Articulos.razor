@@ -1,6 +1,43 @@
 ﻿@page "/RegistroArticulos"
+
+@using Parcial1_Ap2_Flores.Models
+@using Parcial1_Ap2_Flores.BLL
+
+@inject IToastService toast
+
 <h3>R_Articulos</h3>
 
 @code {
+    Articulos articulos = new Articulos();
 
+    protected override void OnInitialized()
+    {
+        Nuevo();
+        Buscar();
+    }
+
+    private void Nuevo()
+    {
+        articulos = new Articulos();
+    }
+
+    private void Buscar()
+    {
+        if (articulos.ProductoId > 0)
+        {
+            var encontrado = ArticulosBLL.Buscar(articulos.ProductoId);
+            if (encontrado != null)
+            {
+                this.articulos = encontrado;
+            }
+            else
+                toast.ShowWarning("¡No encontrado!");
+        }
+    }
+
+    private void Guardar()
+    {
+        bool guardo;
+        guardo =ArticulosBLL
+    }
 }

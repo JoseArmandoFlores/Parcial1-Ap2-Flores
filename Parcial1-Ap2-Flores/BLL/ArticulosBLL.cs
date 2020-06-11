@@ -74,7 +74,7 @@ namespace Parcial1_Ap2_Flores.BLL
 
             return paso;
         }
-        public bool Guardar(Articulos articulo)
+        public static bool Guardar(Articulos articulo)
         {
             if (!Existe(articulo.ProductoId))
                 return Insertar(articulo);
